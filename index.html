@@ -1,245 +1,60 @@
-<!DOCTYPE>
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>后台模板管理系统</title>
-<link type="text/css" rel="stylesheet" href="css/style.css" />
-<!--引用的JS代码-->
-<script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
-<script type="text/javascript" src="js/menu.js"></script>
-</head>
+---
+layout: default
+---
+<link rel="stylesheet" type="text/css" href="{{ '/static/css/article-list.css' | prepend: site.baseurl | prepend: site.url}}" />
 
-<body>
-<div class="top"></div>
-<!--头部右侧的div块-->
-<div id="header">
-	<div class="logo">***后台管理系统</div>
-	<div class="navigation">
-		<ul>
-		 	<li>欢迎您！</li>
-			<li><a href="">张山</a></li>
-			<li><a href="">修改密码</a></li>
-			<li><a href="">设置</a></li>
-			<li><a href="">退出</a></li>
-		</ul>
-	</div>
+<div class="row index">
+  <div class="col-sm-10 col-sm-offset-1 col-lg-9 col-lg-offset-1_5">
+      <div>
+        <section class="category-slice" post-cate="All">
+          {% for post in paginator.posts %}
+            <article>
+                <header>
+                    <a href="{{ site.baseurl | prepend: site.url  }}/archive/#{{ post.date | date: '%Y-%m-%d' }}"><span class="octicon octicon-calendar"></span>&nbsp;<span>{{ post.date | date: "%Y-%m-%d" }}</span></a>
+                </header>
+                <div class="module">
+                  <a class="title" href="{{ post.url | prepend: site.baseurl | prepend: site.url }}">
+                      {{ post.title }}
+                  </a>
+                  <p>{% if post.excerpt.size > 32 %}{{ post.excerpt }}{% else %}{{ post.content | strip_html | strip_newlines | truncate: 160 }}{% endif %}</p>
+                  <a class="readmore" href="{{ post.url | prepend: site.baseurl | prepend: site.url }}">Read More</a>
+                  <footer>
+                      {% for tag in post.tags %}
+                      <a class="word-keep" href="{{ site.baseurl | prepend: site.url }}/tags/#{{ tag }}"><span class="octicon octicon-tag"></span>&nbsp;{{ tag }}</a>
+                      {% endfor %}
+                      <span class="word-keep pull-right">
+                          <a href="{{ post.url | prepend: site.baseurl | prepend: site.url }}#post-comment"><span class="octicon octicon-comment"></span>&nbsp;Comment</a>
+                          <a href="{{ post.url | prepend: site.baseurl | prepend: site.url }}#post-share"><span class="octicon octicon-file-symlink-file"></span>&nbsp;Share</a>
+                      </span>
+                  </footer>
+                </div>
+            </article>
+          {% endfor %}
+        </section>
+
+          <div class="pad-mid"></div>
+
+          <nav class="text-center">
+              <ul class="pagination">
+                {% if paginator.total_pages > 1 %}
+                  {% if paginator.previous_page %}
+                        <li><a href="{{ paginator.previous_page_path | prepend: site.baseurl | prepend: site.url }}" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>
+                  {% endif %}
+                  {% for page in (1..paginator.total_pages) %}
+                      {% if page == paginator.page %}
+                        <li class="active"><span>{{ page }}</span></li>
+                      {% elsif page == 1 %}
+                        <li><a href="{{ '/' | prepend: site.baseurl | prepend: site.url  }}">{{ page }}</a></li>
+                      {% else %}
+                        <li><a href="{{ page |  prepend: '/page/' | prepend: site.baseurl | prepend: site.url }}">{{ page }}</a></li>
+                      {% endif %}
+                  {% endfor %}
+                  {% if !paginator.next_page %}
+                        <li><a href="{{ paginator.next_page_path | prepend: site.baseurl | prepend: site.url }}" aria-label="Next"><span aria-hidden="true">&raquo;</span></a></li>
+                  {% endif %}
+                {% endif %}
+              </ul>
+          </nav>
+      </div>
+  </div>
 </div>
-
-
-
-<!--左侧的div块-->
-<div id="content">
-	<!--菜单的div块-->
-	<div class="left_menu">
-				<ul id="nav_dot">
-				
-				
-				
-				<!--每个li标签戴白一条-->
-				<!--每个li里面嵌套这一个div-->
-				<!--div里面写上链接-->
-      <li>
-          <h4 class="M1"><span></span>系统公告</h4>
-          <div class="list-item none">
-            <a href=''>系统公告1</a>
-            <a href=''>系统公告2</a>
-            <a href=''>系统公告3</a>
-            <a href=''>系统公告4</a>
-          </div>
-        </li>
-		
-		
-		
-		
-		
-		<!--每个li标签戴白一条-->
-				<!--每个li里面嵌套这一个div-->
-				<!--div里面写上链接-->
-        <li>
-          <h4 class="M2"><span></span>工单处理</h4>
-          <div class="list-item none">
-            <a href=''>工单处理1</a>
-            <a href=''>工单处理2</a>
-            <a href=''>工单处理3</a>
-            <a href=''>工单处理4</a>
-            <a href=''>工单处理5</a>          
-           </div>
-        </li>
-		
-		
-		<!--每个li标签戴白一条-->
-				<!--每个li里面嵌套这一个div-->
-				<!--div里面写上链接-->
-		
-		
-		
-        <li>
-          <h4 class="M3"><span></span>基础教学</h4>
-          <div class="list-item none">
-            <a href=''>基础教学1</a>
-            <a href=''>基础教学2</a>
-            <a href=''>基础教学3</a>
-          </div>
-        </li>
-		
-		<!--每个li标签戴白一条-->
-				<!--每个li里面嵌套这一个div-->
-				<!--div里面写上链接-->
-		
-		
-		<li>
-          <h4 class="M4"><span></span>评论管理</h4>
-          <div class="list-item none">
-            <a href=''>评论管理1</a>
-            <a href=''>评论管理2</a>
-            <a href=''>评论管理3</a>
-          </div>
-        </li>
-		
-		<!--每个li标签戴白一条-->
-				<!--每个li里面嵌套这一个div-->
-				<!--div里面写上链接-->
-		
-		
-		
-		<li>
-          <h4 class="M5"><span></span>调研问卷</h4>
-          <div class="list-item none">
-            <a href=''>调研问卷1</a>
-            <a href=''>调研问卷2</a>
-            <a href=''>调研问卷3</a>
-          </div>
-        </li>
-		
-		<!--每个li标签戴白一条-->
-				<!--每个li里面嵌套这一个div-->
-				<!--div里面写上链接-->
-		
-		
-		
-		<li>
-          <h4  class="M6"><span></span>数据统计</h4>
-          <div class="list-item none">
-            <a href=''>数据统计1</a>
-            <a href=''>数据统计2</a>
-            <a href=''>数据统计3</a>
-          </div>
-        </li>
-		
-		
-		<!--每个li标签戴白一条-->
-				<!--每个li里面嵌套这一个div-->
-				<!--div里面写上链接-->
-		
-		
-		<li>
-          <h4  class="M7"><span></span>奖励管理</h4>
-          <div class="list-item none">
-            <a href=''>奖励管理1</a>
-            <a href=''>奖励管理2</a>
-            <a href=''>奖励管理3</a>
-          </div>
-        </li>
-		
-		
-		<!--每个li标签戴白一条-->
-				<!--每个li里面嵌套这一个div-->
-				<!--div里面写上链接-->
-		
-		
-		
-		<li>
-          <h4   class="M8"><span></span>字典维护</h4>
-          <div class="list-item none">
-            <a href=''>字典维护1</a>
-            <a href=''>字典维护2</a>
-            <a href=''>字典维护3</a>
-						<a href=''>字典维护4</a>
-            <a href=''>字典维护5</a>
-            <a href=''>字典维护6</a>
-						<a href=''>字典维护7</a>
-            <a href=''>字典维护8</a>
-            <a href=''>字典维护9</a>
-						<a href=''>字典维护4</a>
-            <a href=''>字典维护5</a>
-            <a href=''>字典维护6</a>
-						<a href=''>字典维护7</a>
-            <a href=''>字典维护8</a>
-            <a href=''>字典维护9</a>
-          </div>
-        </li>
-		
-		
-		<!--每个li标签戴白一条-->
-				<!--每个li里面嵌套这一个div-->
-				<!--div里面写上链接-->
-		
-		
-		
-		<li>
-          <h4  class="M9"><span></span>内容管理</h4>
-          <div class="list-item none">
-            <a href=''>内容管理1</a>
-            <a href=''>内容管理2</a>
-            <a href=''>内容管理3</a>
-          </div>
-        </li>
-		
-		
-		
-		<!--每个li标签戴白一条-->
-				<!--每个li里面嵌套这一个div-->
-				<!--div里面写上链接-->
-		
-		
-		
-		<li>
-          <h4   class="M10"><span></span>系统管理</h4>
-          <div class="list-item none">
-            <a href=''>系统管理1</a>
-            <a href=''>系统管理2</a>
-            <a href=''>系统管理3</a>
-          </div>
-        </li>
-  </ul>
-		
-		</div>
-		
-		
-		
-		 <!--这个div块是菜单右侧的块-->
-		<div class="m-right">
-			<div class="right-nav">
-					<!--这个div块是菜单的面包屑-->
-					<ul>
-							<li><img src="images/home.png"></li>
-								<li style="margin-left:25px;">您当前的位置：</li>
-								<li><a href="#">系统公告</a></li>
-								<li>        >              </li>
-								<li><a href="#">最新公告</a></li>
-						</ul>
-			</div>
-			
-			
-			
-			<!--这个div块是右侧的主窗体-->
-			<div class="main">
-					<!--这个div里面没有写东西当然你爱写点啥就写点啥-->
-			</div>
-			
-			
-			
-			
-		</div>
-</div>
-
-<!--这个div块是底部-->
-<div class="bottom"></div>
-<div id="footer"><p>Copyright©  2015 版权所有 京ICP备05019125号-10  </p></div>
-
-
-
-
-
-</body>
-</html>
